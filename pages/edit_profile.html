@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="../css/edit_profile.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Edit Profile</h2>
+        <form id="editProfileForm">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" value="Kate Malale" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="katemalale@icloud.com" required>
+            </div>
+            <button type="submit">Save Changes</button>
+        </form>
+        <a href="profile.html">Cancel</a>
+    </div>
+    <script>
+        document.getElementById('editProfileForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Here you can add code to save the changes
+            // After saving the changes, redirect to the dashboard
+            window.location.href = 'dashboard.html';
+        });
+    </script>
+</body>
+</html>

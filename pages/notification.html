@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification Settings</title>
+    <link rel="stylesheet" href="../css/notification.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Notification Settings</h2>
+        <form id="notificationForm">
+            <div class="form-group">
+                <label for="notification-type">Notification Type:</label>
+                <select id="notification-type" name="notification_type" required>
+                    <option value="sms">SMS</option>
+                    <option value="alert">Call</option>
+                    <option value="both">Both</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="phone-number">Phone Number:</label>
+                <input type="tel" id="phone-number" name="phone_number" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <button type="submit">Save Settings</button>
+        </form>
+        <a href="dashboard.html">Back to Dashboard</a>
+    </div>
+    <script>
+        document.getElementById('notificationForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+            // Add any form validation or submission logic here
+
+            // Show a message indicating that changes have been saved
+            alert('Changes Saved');
+        });
+    </script>
+</body>
+</html>

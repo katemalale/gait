@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <style>
+        .suggestions {
+            position: absolute;
+            background: white;
+            border: 1px solid #ddd;
+            max-height: 150px;
+            overflow-y: auto;
+            z-index: 1000;
+            width: calc(100% - 40px);
+            margin-top: 5px;
+            display: none;
+        }
+        .suggestion-item {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .suggestion-item:hover {
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Gait System</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                    <li><a href="employee_management.html">Employees</a></li>
+                    <li><a href="profile.html">User Profile</a></li>
+                    <li><a href="notification.html">Notification</a></li>
+                    <li><a href="logout.html">Logout</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="profile">
+                    <img src="profile.jpg" alt="Profile Picture">
+                    <p>Kate Malale</p>
+                    <p>katemalale@icloud.com</p>
+                </div>
+            </div>
+        </aside>
+        <main class="main-content">
+            <header class="header">
+                <input type="text" id="searchBar" placeholder="Search...">
+                <div id="suggestions" class="suggestions"></div>
+                <span id="datetime"></span>
+            </header>
+            <section class="content">
+                <div class="content-header">
+                    <h2>Camera Feeds</h2>
+                </div>
+                <div class="camera-container">
+                    <video id="cameraFeed" autoplay></video>
+                </div>
+                <div class="content-header">
+                    <h2>Movement Analysis</h2>
+                </div>
+                <div class="analysis-container">
+                    <p id="movementAnalysis">No abnormal movement detected.</p>
+                    <button id="downloadReport">Download Report</button>
+                    <button id="visualizeData">Visualize Data</button>
+                </div>
+                <div class="content-header">
+                    <h2>Abnormal Detection Screenshots</h2>
+                </div>
+                <div class="screenshots-container">
+                    <!-- Screenshots will go here -->
+                    <button id="downloadScreenshots">Download Screenshots</button>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script>
+        // JavaScript to fetch camera feed and update movement analysis
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                const video = document.getElementById('cameraFeed');
+                video.srcObject = stream;
+            })
+            .catch(err => {
+                console.error('Error accessing camera:', err);
+                document.getElementById('movementAnalysis').textContent = 'Error accessing camera feed.';
+            });
+
+        // Display current date and time
+        function updateDateTime() {
+            const now = new Date();
+            document.getElementById('datetime').textContent = now.toLocaleString();
+        }
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+
+        // Event listeners for buttons
+        document.getElementById('downloadReport').addEventListener('click', () => {
+            // Code to download the movement analysis report
+        });
+
+        document.getElementById('visualizeData').addEventListener('click', () => {
+            // Code to visualize the movement analysis data
+        });
+
+        document.getElementById('downloadScreenshots').addEventListener('click', () => {
+            // Code to download the screenshots
+        });
+
+        // Search functionality
+        document.getElementById('searchBar').addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            const options = [
+                { name: 'dashboard', url: 'dashboard.html' },
+                { name: 'employees', url: 'employee_management.html' },
+                { name: 'user profile', url: 'profile.html' },
+                { name: 'notification', url: 'notification.html' },
+                { name: 'logout', url: 'logout.html' },
+                { name: 'edit profile', url: 'edit_profile.html' },
+                { name: 'add admin', url: 'profile.html' }
+            ];
+            
+            const suggestions = document.getElementById('suggestions');
+            suggestions.innerHTML = ''; // Clear previous suggestions
+            if (query.length > 0) {
+                const matches = options.filter(option => option.name.includes(query));
+                if (matches.length > 0) {
+                    suggestions.style.display = 'block';
+                    matches.forEach(match => {
+                        const item = document.createElement('div');
+                        item.className = 'suggestion-item';
+                        item.textContent = match.name;
+                        item.onclick = () => window.location.href = match.url;
+                        suggestions.appendChild(item);
+                    });
+                } else {
+                    suggestions.style.display = 'none';
+                }
+            } else {
+                suggestions.style.display = 'none';
+            }
+        });
+
+        // Hide suggestions when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!document.getElementById('searchBar').contains(e.target) && !document.getElementById('suggestions').contains(e.target)) {
+                document.getElementById('suggestions').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
